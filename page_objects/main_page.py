@@ -30,10 +30,10 @@ class MainPage(BasePage):
             raise AssertionError(f"Couldn't fined element in {timeout} seconds")
 
     def close_wishlist_alert(self):
-        self.wait_for_element_and_click(*Alerts.WISHLIST_ALERT_CLOSE)
+        self.wait_for_element_and_click(*Alerts.SUCCESS_ALERT_CLOSE)
 
     def closed_alert_should_disappear(self):
-        self.wait_for_element_to_disappear(*Alerts.WISHLIST_ALERT)
+        self.wait_for_element_to_disappear(*Alerts.SUCCESS_ALERT)
 
     def should_be_cart_button(self):
         assert self.is_element_present(*MainPage.MAIN_PAGE_CART_BUTTON), "Cart button wasn't found"

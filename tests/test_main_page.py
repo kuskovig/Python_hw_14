@@ -36,8 +36,3 @@ def test_there_is_search_button(browser, url):
     page = MainPage(browser, url)
     page.open()
     page.should_be_search_button()
-
-
-
-
-
