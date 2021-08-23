@@ -1,5 +1,4 @@
 from page_objects.product_page import ProductPage
-import pytest
 
 
 def test_there_is_reviews_tab(browser, url):
