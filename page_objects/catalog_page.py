@@ -4,11 +4,11 @@ import random
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import time
+from selenium.webdriver.support.select import Select
 
 
 class CatalogPage(BasePage):
-    LAPTOPS_CATALOG_RELATIVE_URL = "/laptop-notebook/"
+    LAPTOPS_CATALOG_RELATIVE_URL = "/laptop-notebook"
     COMPARE_PRODUCT_BUTTONS = (By.CSS_SELECTOR, "button[data-original-title='Compare this Product']")  # all of them
     PRODUCT_IMAGES = (By.CSS_SELECTOR, ".product-layout img")  # all of them
     COMPARE_HYPERLINK = (By.CSS_SELECTOR, "#compare-total")
@@ -42,3 +42,19 @@ class CatalogPage(BasePage):
         name = product.get_property("alt")
         product.click()
         assert self.browser.title == name
+
+    def select_input_limit(self, limit):
+        selector = Select(self.wait_for_element(*self.INPUT_LIMIT))
+        selector.select_by_value(self.browser.current_url + "?limit=" + limit)
+
+    def check_current_input_limit(self):
+        value_locator = f"{self.INPUT_LIMIT[1]} option[value='{self.browser.current_url}']"
+        assert self.wait_for_element(By.CSS_SELECTOR, value_locator).get_property("selected"),\
+            "Element is not selected"
+    
+    def switch_view(self, view_id):
+        self.wait_for_element_and_click(By.CSS_SELECTOR, view_id)
+    
+    def check_if_view_is_active(self, view_id):
+        assert "active" in self.wait_for_element(By.CSS_SELECTOR, view_id).get_property("classList"),\
+            "Element is not selected"
