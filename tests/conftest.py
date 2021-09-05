@@ -1,5 +1,10 @@
+import socket
 import pytest
 from selenium import webdriver
+
+
+def get_local_opencart_address():
+    return "http://"+socket.gethostbyname(socket.gethostname())+":8081"
 
 
 def pytest_addoption(parser):
@@ -9,7 +14,7 @@ def pytest_addoption(parser):
                      default="chrome")
     parser.addoption("--url",
                      action="store",
-                     default="https://demo.opencart.com/")
+                     default=get_local_opencart_address())
 
 
 @pytest.fixture
@@ -31,6 +36,7 @@ def browser(request):
     request.addfinalizer(teardown)
     driver.set_window_size(1960, 1080)
     return driver
+
 
 @pytest.fixture
 def url(request):
